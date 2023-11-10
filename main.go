@@ -4,12 +4,15 @@ import (
 	"log"
 
 	"github.com/gofiber/fiber/v2"
+
+	"github.com/root27/URL-Shortener/routes"
 )
 
 func SetupRoutes(app *fiber.App) {
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World 👋!")
-	})
+
+	app.Get("/shorten", routes.Shorten)
+
+	app.Get("/:id", routes.Redirect)
 
 }
 
