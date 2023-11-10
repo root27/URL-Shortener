@@ -1,8 +1,16 @@
 package routes
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"log"
+
+	"github.com/gofiber/fiber/v2"
+
+	"github.com/root27/URL-Shortener/redis"
+)
 
 func Redirect(c *fiber.Ctx) error {
+
+	client := redis.NewClient()
 
 	id := c.Params("id")
 
@@ -14,11 +22,11 @@ func Redirect(c *fiber.Ctx) error {
 		return c.SendString("Invalid URL")
 	}
 
-	originalURL, found := urls[id]
+	originalURL, err := client.Get(ctx, id).Result()
 
-	if !found {
+	if err != nil {
+		log.Println(err)
 		return c.SendString("Invalid URL")
-
 	}
 
 	return c.Redirect(originalURL)

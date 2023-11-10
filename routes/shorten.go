@@ -1,10 +1,14 @@
 package routes
 
 import (
+	"context"
 	"log"
 	"math/rand"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
+
+	"github.com/root27/URL-Shortener/redis"
 )
 
 var urls = make(map[string]string)
@@ -13,9 +17,13 @@ type Request struct {
 	Url string `json:"url"`
 }
 
+var ctx = context.Background()
+
 //Shorten the URL
 
 func Shorten(c *fiber.Ctx) error {
+
+	client := redis.NewClient()
 
 	request := new(Request)
 
@@ -33,6 +41,13 @@ func Shorten(c *fiber.Ctx) error {
 	//Store the URL in the database
 
 	urls[random_string] = request.Url
+
+	err = client.Set(ctx, random_string, request.Url, time.Second*10).Err()
+
+	if err != nil {
+		log.Println(err)
+
+	}
 
 	//Insert the URL in the database
 
