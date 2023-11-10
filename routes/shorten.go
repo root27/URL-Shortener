@@ -10,8 +10,6 @@ import (
 	"github.com/root27/URL-Shortener/redis"
 )
 
-var urls = make(map[string]string)
-
 type Request struct {
 	Url string `json:"url"`
 }
