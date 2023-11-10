@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"log"
 	"math/rand"
 
 	"github.com/gofiber/fiber/v2"
@@ -8,17 +9,22 @@ import (
 
 var urls = make(map[string]string)
 
+type Request struct {
+	Url string `json:"url"`
+}
+
 //Shorten the URL
 
 func Shorten(c *fiber.Ctx) error {
 
-	if c.Query("url") == "" {
-		return c.JSON(fiber.Map{
-			"error": "No URL provided",
-		})
-	}
+	request := new(Request)
 
-	url := c.Query("url")
+	err := c.BodyParser(request)
+
+	if err != nil {
+		log.Println(err)
+		return c.SendString("Invalid URL")
+	}
 
 	random_string := GenerateRandomString(3)
 
@@ -26,15 +32,15 @@ func Shorten(c *fiber.Ctx) error {
 
 	//Store the URL in the database
 
-	urls[random_string] = url
+	urls[random_string] = request.Url
 
 	//Insert the URL in the database
 
 	//Return the JSON response
 
 	return c.JSON(fiber.Map{
-		"success": true,
-		"url":     shortURL,
+
+		"url": shortURL,
 	})
 }
 
