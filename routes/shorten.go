@@ -4,7 +4,6 @@ import (
 	"context"
 	"log"
 	"math/rand"
-	"time"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -40,9 +39,7 @@ func Shorten(c *fiber.Ctx) error {
 
 	//Store the URL in the database
 
-	urls[random_string] = request.Url
-
-	err = client.Set(ctx, random_string, request.Url, time.Second*10).Err()
+	err = client.Set(ctx, random_string, request.Url, 0).Err()
 
 	if err != nil {
 		log.Println(err)

@@ -18,10 +18,6 @@ func Redirect(c *fiber.Ctx) error {
 
 	//Redirect the user to it
 
-	if urls[id] == "" {
-		return c.SendString("Invalid URL")
-	}
-
 	originalURL, err := client.Get(ctx, id).Result()
 
 	if err != nil {
