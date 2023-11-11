@@ -12,8 +12,11 @@ The app is running on http://localhost:3000. The homepage is as follows:
 
 To shorten a URL, enter the URL in the input box and click the "Shorten" button. The shortened URL will be displayed below the input box.
 
-## Todo's
+## Usage with docker-compose
 
+To run the app with docker-compose, run the following command:
 
-- [ ] Add a redis db to store urls
+```bash
+docker-compose up -d
+```
 
