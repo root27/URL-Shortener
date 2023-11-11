@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  go-app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    container_name: go-app
+  redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
+    container_name: redis
+
+  
