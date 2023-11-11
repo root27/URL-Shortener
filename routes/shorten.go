@@ -31,6 +31,10 @@ func Shorten(c *fiber.Ctx) error {
 		return c.SendString("Invalid URL")
 	}
 
+	if request.Url == "" {
+		return c.SendString("Form is empty")
+	}
+
 	random_string := GenerateRandomString(3)
 
 	shortURL := c.BaseURL() + "/" + random_string
