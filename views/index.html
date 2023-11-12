@@ -91,10 +91,16 @@
 
             const shortedURL = await response.json();
 
+            if (shortedURL.error) {
+                alert(shortedURL.error);
+                
+                document.getElementById("shortenedUrl").textContent = shortedURL.error;
 
-            // You can add logic here to actually perform the URL shortening using an API
+                document.getElementById("shortenedUrl").style.color = "red";
+                return 
+            }
 
-            // For demonstration purposes, just display the long URL as shortened
+
             var shortenedUrlDisplay = document.getElementById("shortenedUrl");
             shortenedUrlDisplay.textContent = "Shortened URL: " 
             
