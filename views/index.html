@@ -44,6 +44,14 @@
             border-radius: 4px;
         }
 
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
         button {
             background-color: #4CAF50;
             color: #fff;
@@ -68,6 +76,25 @@
     <form action="#" method="post" id="urlForm">
         <label for="longUrl">Enter Long URL:</label>
         <input type="url" id="longUrl" name="longUrl" required>
+
+        <!-- add time selection-->
+
+        <label for="time">Select Expiration Time:</label>
+        <select id="time" name=""time>
+            <option default value="5">5 minutes</option>
+            <option value="10">10 minutes</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">1 hour</option>
+            <option value="120">2 hours</option>
+            <option value="240">4 hours</option>
+            <option value="0">No expiration time</option>
+
+        </select>
+
+
+
+
         <button type="button" onclick="shortenUrl()">Shorten URL</button>
     </form>
 
@@ -78,15 +105,17 @@
             var longUrlInput = document.getElementById("longUrl");
             var longUrl = longUrlInput.value;
 
+            var time = document.getElementById("time").value;
 
-            const url = 'http://localhost:3000/shorten';
+
+            const url = window.location.hostname + "/shorten"
 
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ url:longUrl })
+                body: JSON.stringify({ url:longUrl, minutes:time })
             })
 
             const shortedURL = await response.json();

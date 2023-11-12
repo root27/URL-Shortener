@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"regexp"
+	"time"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -12,7 +13,8 @@ import (
 )
 
 type Request struct {
-	Url string `json:"url"`
+	Url     string `json:"url"`
+	Minutes int    `json:"minutes"`
 }
 
 var ctx = context.Background()
@@ -20,6 +22,8 @@ var ctx = context.Background()
 //Shorten the URL
 
 func Shorten(c *fiber.Ctx) error {
+
+	var redisExpiration time.Duration
 
 	client := redis.NewClient()
 
@@ -55,7 +59,13 @@ func Shorten(c *fiber.Ctx) error {
 
 	//Store the URL in the database
 
-	err = client.Set(ctx, random_string, request.Url, 0).Err()
+	if request.Minutes == 0 {
+		redisExpiration = 0
+	} else {
+		redisExpiration = time.Duration(request.Minutes) * time.Minute
+	}
+
+	err = client.Set(ctx, random_string, request.Url, redisExpiration).Err()
 
 	if err != nil {
 		log.Println(err)
