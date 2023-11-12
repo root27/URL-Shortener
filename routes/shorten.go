@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"math/rand"
+	"regexp"
 
 	"github.com/gofiber/fiber/v2"
 
@@ -28,11 +29,24 @@ func Shorten(c *fiber.Ctx) error {
 
 	if err != nil {
 		log.Println(err)
-		return c.SendString("Invalid URL")
+		return c.JSON(fiber.Map{
+			"status": "error",
+			"error":  "Cannot parse JSON",
+		})
 	}
 
 	if request.Url == "" {
-		return c.SendString("Form is empty")
+		return c.JSON(fiber.Map{
+			"status": "error",
+			"error":  "URL cannot be empty",
+		})
+	}
+
+	if !Checkurl(request.Url) {
+		return c.JSON(fiber.Map{
+			"status": "error",
+			"error":  "Invalid URL",
+		})
 	}
 
 	random_string := GenerateRandomString(3)
@@ -47,8 +61,6 @@ func Shorten(c *fiber.Ctx) error {
 		log.Println(err)
 
 	}
-
-	//Insert the URL in the database
 
 	//Return the JSON response
 
@@ -72,4 +84,11 @@ func GenerateRandomString(n int) string {
 
 	return string(random)
 
+}
+
+func Checkurl(url string) bool {
+
+	regexp := regexp.MustCompile(`^http(s)?://[a-z0-9]+(.[a-z0-9]+)*(:[0-9]+)?(/.*)?$`)
+
+	return regexp.MatchString(url)
 }
