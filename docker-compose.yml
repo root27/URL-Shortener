@@ -3,14 +3,18 @@ version: '3'
 services:
   go-app:
     image: golang
+    deploy:
+      mode: replicated
+      replicas: 4
     volumes:
       - $PWD:/go/src/app
     working_dir: /go/src/app
     command: bash -c "go get -v && go build -o main && ./main"
     ports:
-      - "3000:3000"
+      - "3000-3003:3000"
     depends_on:
       - redis
+    
     restart: always
   redis:
     image: redis

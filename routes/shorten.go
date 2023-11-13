@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 	"math/rand"
+	"os"
 	"regexp"
 	"strconv"
 	"time"
@@ -87,7 +88,8 @@ func Shorten(c *fiber.Ctx) error {
 
 	return c.JSON(fiber.Map{
 
-		"url": shortURL,
+		"url":      shortURL,
+		"hostname": os.Getenv("HOSTNAME"),
 	})
 }
 
