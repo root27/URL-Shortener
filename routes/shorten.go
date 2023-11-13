@@ -5,6 +5,7 @@ import (
 	"log"
 	"math/rand"
 	"regexp"
+	"strconv"
 	"time"
 
 	"github.com/gofiber/fiber/v2"
@@ -14,7 +15,7 @@ import (
 
 type Request struct {
 	Url     string `json:"url"`
-	Minutes int    `json:"minutes"`
+	Minutes string `json:"minutes"`
 }
 
 var ctx = context.Background()
@@ -53,16 +54,26 @@ func Shorten(c *fiber.Ctx) error {
 		})
 	}
 
+	int_times, err := strconv.Atoi(request.Minutes)
+
+	if err != nil {
+		log.Println(err)
+		return c.JSON(fiber.Map{
+			"status": "error",
+			"error":  "Invalid minutes",
+		})
+	}
+
 	random_string := GenerateRandomString(3)
 
 	shortURL := c.BaseURL() + "/" + random_string
 
 	//Store the URL in the database
 
-	if request.Minutes == 0 {
+	if int_times == 0 {
 		redisExpiration = 0
 	} else {
-		redisExpiration = time.Duration(request.Minutes) * time.Minute
+		redisExpiration = time.Duration(int_times) * time.Minute
 	}
 
 	err = client.Set(ctx, random_string, request.Url, redisExpiration).Err()

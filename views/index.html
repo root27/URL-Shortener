@@ -108,7 +108,9 @@
             var time = document.getElementById("time").value;
 
 
-            const url = window.location.hostname + "/shorten"
+            const url = "http://localhost:3000/shorten"
+
+
 
             const response = await fetch(url, {
                 method: 'POST',
@@ -121,7 +123,7 @@
             const shortedURL = await response.json();
 
             if (shortedURL.error) {
-                alert(shortedURL.error);
+                
                 
                 document.getElementById("shortenedUrl").textContent = shortedURL.error;
 
