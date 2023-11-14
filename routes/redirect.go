@@ -22,7 +22,7 @@ func Redirect(c *fiber.Ctx) error {
 
 	if err != nil {
 		log.Println(err)
-		return c.SendString("Invalid URL")
+		return c.Render("error", fiber.Map{})
 	}
 
 	return c.Redirect(originalURL)
