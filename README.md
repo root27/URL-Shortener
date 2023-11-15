@@ -21,3 +21,5 @@ docker-compose up -d
 ```
 ## Live Preview
 
+You can test the app at https://shorten.ws
+
