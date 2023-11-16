@@ -97,7 +97,7 @@
             var longUrlInput = document.getElementById("longUrl");
             var longUrl = longUrlInput.value;
             var time = document.getElementById("time").value;
-            const url = "http://localhost:3000/shorten"
+            const url = window.location.hostname + "/shorten"
 
             const response = await fetch(url, {
                 method: 'POST',
