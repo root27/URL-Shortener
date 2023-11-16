@@ -66,7 +66,7 @@ func Shorten(c *fiber.Ctx) error {
 
 	random_string := GenerateRandomString(3)
 
-	shortURL := c.BaseURL() + "/" + random_string
+	shortURL := "https://shorten.ws/" + random_string
 
 	//Store the URL in the database
 
