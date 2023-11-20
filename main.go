@@ -15,9 +15,15 @@ func SetupRoutes(app *fiber.App) {
 		return c.Render("index", fiber.Map{})
 	})
 
+	app.Get("/click-counter", func(c *fiber.Ctx) error {
+		return c.Render("click-counter", fiber.Map{})
+	})
+
 	app.Post("/shorten", routes.Shorten)
 
 	app.Get("/:id", routes.Redirect)
+
+	app.Get("/metrics/:id", routes.GetMetrics)
 
 }
 
