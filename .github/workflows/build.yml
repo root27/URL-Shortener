@@ -1,0 +1,27 @@
+name: url-shortener build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+      
+      - name: Copy Files
+        run: |
+          cp -r ./* /home/web-apps/URL-Shortener
+          cd /home/web-apps/URL-Shortener
+      
+      - name: Docker Compose
+        run: |
+          cd /home/web-apps/URL-Shortener
+          docker-compose up -d
+
+
+
