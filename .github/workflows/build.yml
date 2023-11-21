@@ -21,7 +21,7 @@ jobs:
       - name: Docker Compose
         run: |
           cd /home/web-apps/URL-Shortener
-          docker-compose up -d
+          docker-compose restart
 
 
 
