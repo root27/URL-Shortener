@@ -1,10 +1,10 @@
 package routes
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/root27/URL-Shortener/redis"
 )
 
 type UnshortenRequest struct {
@@ -23,12 +23,21 @@ func Unshorten(c *fiber.Ctx) error {
 		})
 	}
 
-	id := strings.Split(body.Url, "/")
+	id := strings.Split(body.Url, "/")[3]
 
-	fmt.Println(id)
+	client := redis.NewClient()
 
-	return c.Status(fiber.StatusOK).JSON(fiber.Map{
-		"message": "Unshortened",
+	url, err := client.Get(ctx, id).Result()
+
+	if err != nil {
+		return c.Status(fiber.StatusInternalServerError).JSON(fiber.Map{
+			"error": "No valid url found",
+		})
+
+	}
+
+	return c.JSON(fiber.Map{
+		"originalUrl": url,
 	})
 
 }
