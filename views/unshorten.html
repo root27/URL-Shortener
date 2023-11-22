@@ -85,10 +85,10 @@
 </head>
 <body>
     <h1>Unshorten URL</h1>
-    <form onsubmit="getOriginalUrl(event)">
+    <form action="#" method="post">
         <label for="shortenedUrl">Enter Shortened URL:</label>
         <input type="url" id="shortenedUrl" name="shortenedUrl" required>
-        <button type="submit">Get Original URL</button>
+        <button type="button" onclick="getOriginalUrl()">Get Original URL</button>
     </form>
 
     <div class="original-url" style="display: none;">
@@ -96,11 +96,15 @@
     </div>
 
     <script>
-        async function getOriginalUrl(event) {
-            event.preventDefault();
-            const shortenedUrl = document.getElementById("shortenedUrl").value.trim();
 
-            const response = await fetch('your_server_endpoint/unshorten', {
+    const url = window.location.href.replace('unshorten', 'unshortened');
+
+
+
+        async function getOriginalUrl() {
+            const shortenedUrl = document.getElementById("shortenedUrl").value;
+
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
