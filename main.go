@@ -23,7 +23,7 @@ func SetupRoutes(app *fiber.App) {
 
 	app.Get("/:id", routes.Redirect)
 
-	app.Get("/unshortened", routes.Unshorten)
+	app.Post("/unshortened", routes.Unshorten)
 
 }
 
