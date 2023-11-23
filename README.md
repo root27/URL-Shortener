@@ -4,6 +4,12 @@ This is a simple URL shortener built with Golang.
 
 ---
 
+## Update (23.11.2023)
+
+- Added github actions
+
+---
+
 ## Usage
 
 The app is running on http://localhost:3000. The homepage is as follows:
