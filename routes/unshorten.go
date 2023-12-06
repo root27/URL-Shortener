@@ -23,6 +23,12 @@ func Unshorten(c *fiber.Ctx) error {
 		})
 	}
 
+	if body.Url == "" {
+		return c.Status(fiber.StatusBadRequest).JSON(fiber.Map{
+			"error": "URL cannot be empty",
+		})
+	}
+
 	id := strings.Split(body.Url, "/")[3]
 
 	client := redis.NewClient()
