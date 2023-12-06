@@ -81,6 +81,25 @@
             word-wrap: break-word;
             margin: 0;
         }
+
+        .show-original-btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    max-width: 200px; /* Set your desired maximum width */
+    width: 100%; /* Take up available width within the maximum */
+    box-sizing: border-box; /* Consider padding in width */
+    margin: 0 auto; /* Center the button horizontally */
+}
+
+.show-original-btn:hover {
+    background-color: #0056b3;
+}
     </style>
 </head>
 <body>
@@ -95,7 +114,15 @@
         <p id="originalUrl"></p>
     </div>
 
+    <button class="show-original-btn" onclick="navigateToOriginal()">Back to HomePage</button>
+
+
     <script>
+
+    function navigateToOriginal() {
+            window.location.href = "/unshorten"
+        }
+
 
     const url = window.location.href.replace('unshorten', 'unshortened');
 
