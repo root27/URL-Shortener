@@ -37,3 +37,9 @@ docker-compose up -d
 
 You can test the app at https://shorten.ws
 
+---
+
+## LICENSE
+
+[MIT](./LICENSE)
+
